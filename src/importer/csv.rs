@@ -1,4 +1,9 @@
 
 pub fn import_from_csv(path: String){
-    print!("{path}");
+    let mut counter = 0;
+
+    while counter < 10{
+        print!("{path}");
+        counter += 1;
+    }
 }

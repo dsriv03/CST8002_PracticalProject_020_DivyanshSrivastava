@@ -1,9 +1,9 @@
-use time;
+use chrono::{naive::MIN_DATE, NaiveDate};
 
 pub struct CrudeRunsDTO {
     
-    week_end: time::Date, //a
-    week_end_last_year: time::Date, //a
+    week_end: chrono::NaiveDate,
+    week_end_last_year: chrono::NaiveDate,
     region: String,
     volume: f64,
     capacity: f64,
@@ -17,10 +17,11 @@ pub struct CrudeRunsDTO {
 
 impl Default for CrudeRunsDTO{
     fn default() -> Self {
-        //unhandled panic if input out of range (hard-coded so not possible, still not an elegent solution)
-        let default_time = time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap();
-        Self { week_end: default_time,
-            week_end_last_year: default_time,
+        Self {
+            //hard coded default values possibly bad design, TODO: find better invalid field handling logic
+            week_end: NaiveDate::MIN,
+            week_end_last_year: NaiveDate::MIN,
+            //TODO: assign better default values
             region: Default::default(),
             volume: Default::default(), 
             capacity: Default::default(),
@@ -34,11 +35,11 @@ impl Default for CrudeRunsDTO{
 
 impl CrudeRunsDTO {
 
-    pub fn set_weekly_end(&mut self, date: time::Date){
+    pub fn set_weekly_end(&mut self, date: NaiveDate){
         self.week_end = date;
     }
 
-    pub fn set_week_end_last_year(&mut self, date: time::Date){
+    pub fn set_week_end_last_year(&mut self, date: NaiveDate){
         self.week_end_last_year = date;
     }
 

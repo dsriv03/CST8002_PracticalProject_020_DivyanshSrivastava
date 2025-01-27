@@ -14,6 +14,7 @@ fn main() {
     import_from_csv(String::from("resources/data.csv")).expect("Could not load list of entries. (This would never trigger and should be handled in csv.rs in the future)");
     for mut entry in list_of_entries{
         entry.to_string();
+        println!("Practical Project 1 by Divyansh Srivastava, 041109063.")
     }
 
     //time benchmark end

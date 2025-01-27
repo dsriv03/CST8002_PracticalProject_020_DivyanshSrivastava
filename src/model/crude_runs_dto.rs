@@ -1,7 +1,8 @@
-use chrono::{naive::MIN_DATE, NaiveDate};
+use chrono::NaiveDate;
 
 pub struct CrudeRunsDTO {
     
+    id: u128,
     week_end: chrono::NaiveDate,
     week_end_last_year: chrono::NaiveDate,
     region: String,
@@ -19,6 +20,7 @@ impl Default for CrudeRunsDTO{
     fn default() -> Self {
         Self {
             //hard coded default values possibly bad design, TODO: find better invalid field handling logic
+            id: 0,
             week_end: NaiveDate::MIN,
             week_end_last_year: NaiveDate::MIN,
             //TODO: assign better default values
@@ -75,4 +77,27 @@ impl CrudeRunsDTO {
         self.unit = unit;
     }
 
+    pub fn set_id(&mut self, id: u128){
+        self.id = id;
+    }
+
+    pub fn to_string(&mut self){
+        println!("id: {},
+        week_end: {},
+        week_end_last_year: {},
+        region: {},
+        volume: {},
+        capacity: {},
+        four_week_avg: {},
+        four_week_avg_lastyear: {},
+        ytd_avg: {},
+        ytd_avg_lastyear{},
+        unit: {}",
+        self.id,
+        self.week_end, self.week_end_last_year,
+        self.region, self.volume,
+        self.capacity, self.four_week_avg,
+        self.four_week_avg_lastyear, self.ytd_avg,
+        self.ytd_avg_lastyear, self.unit)
+    }
 }

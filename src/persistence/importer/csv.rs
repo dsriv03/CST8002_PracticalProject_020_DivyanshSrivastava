@@ -10,7 +10,6 @@ use crate::crude_runs_dto::CrudeRunsDTO;
 
 use chrono::NaiveDate;
 
-
     /// Handles importing data from a csv file and packaging them into a vector
     ///
     /// # Arguments
@@ -57,10 +56,19 @@ pub fn import_from_csv(path: String) -> Result<Vec<CrudeRunsDTO>, Box<dyn Error>
 
         // Insert a successfully created object into the vector
         vec_dto.push(entry);
+
         // increment ID count
         import_counter += 1;
+
+        //TODO: create better logic to dynamically change entry count limit (pass it as an argument?)
+        if import_counter > 100{
+            import_counter -= 1;
+            println!("{} successfully imported.", import_counter);
+            return Ok(vec_dto);
+        }
     }
     // Status message, TODO: move into a debug log in the future
+    import_counter -= 1;
     println!("{} successfully imported.", import_counter);
 
     // Return a successful Result touple with the DTO vector

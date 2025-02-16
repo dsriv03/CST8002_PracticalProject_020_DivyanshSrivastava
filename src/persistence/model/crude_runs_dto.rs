@@ -190,7 +190,7 @@ impl CrudeRunsDTO {
         four_week_avg: {},
         four_week_avg_lastyear: {},
         ytd_avg: {},
-        ytd_avg_lastyear{},
+        ytd_avg_lastyear: {},
         unit: {}",
         self.id,
         self.week_end, self.week_end_last_year,

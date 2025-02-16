@@ -8,7 +8,7 @@
 
 mod persistence;
 
-use persistence::importer::csv::import_from_csv;
+use persistence::importer::csv;
 use persistence::model::crude_runs_dto;
 
 
@@ -21,7 +21,7 @@ fn main() {
     // Call importer to get the DTO vector with all imported entries
     //TODO: import location from props file 
     let list_of_entries: Vec<crude_runs_dto::CrudeRunsDTO> = 
-    import_from_csv(String::from("resources/data.csv")).expect("Could not load list of entries. (This would never trigger and should be handled in csv.rs in the future)");
+    csv::import_from_csv(String::from("resources/data.csv")).expect("Could not load list of entries. (This would never trigger and should be handled in csv.rs in the future)");
 
     // Iteratore over the DTO vector and call to string on each
     for mut entry in list_of_entries{

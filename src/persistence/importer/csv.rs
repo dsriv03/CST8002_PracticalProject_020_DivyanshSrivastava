@@ -5,12 +5,11 @@
     Submission Date: 26/1/2025
 */
 
-
 use std::{error::Error, fs::File};
+use crate::crude_runs_dto::CrudeRunsDTO;
 
 use chrono::NaiveDate;
 
-use crate::model::crude_runs_dto::CrudeRunsDTO;
 
     /// Handles importing data from a csv file and packaging them into a vector
     ///
@@ -58,7 +57,6 @@ pub fn import_from_csv(path: String) -> Result<Vec<CrudeRunsDTO>, Box<dyn Error>
 
         // Insert a successfully created object into the vector
         vec_dto.push(entry);
-
         // increment ID count
         import_counter += 1;
     }

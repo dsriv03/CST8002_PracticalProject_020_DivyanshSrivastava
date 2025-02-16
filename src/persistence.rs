@@ -7,4 +7,5 @@
 
 
 /// Outlines the existence of csv.rs module inside importer/
-pub mod csv;
+pub mod importer;
+pub mod model;

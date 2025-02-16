@@ -1,5 +1,10 @@
+use std::error::Error;
+use std::str::FromStr;
+
 use crate::persistence::model::crude_runs_dto::CrudeRunsDTO;
 use crate::csv::import_from_csv;
+
+use uuid::Uuid;
 
 pub struct CrudeRunsDao{
 
@@ -28,8 +33,23 @@ impl CrudeRunsDao{
     // Iteratore over the DTO vector and call to string on each
     for entry in &mut self.entries{
         entry.to_string();
+        //TODO: Shift this to presentation
         println!("Practical Project 1 by Divyansh Srivastava, 041109063.")
     }
+    }
+
+    pub fn write_to_csv(&mut self) -> Result<(), Box<dyn Error>>{
+ 
+        let id = Uuid::new_v4().to_string();
+        let mut path: String = String::from_str("resources/").expect("Bad input");
+        path.push_str(id.as_str());
+        path.push_str(".csv");
+        
+        let mut writer = csv::Writer::from_path(path)?;
+        for entry in &mut self.entries{
+            writer.serialize(&entry);
+        }
+        Ok(())
     }
 
 }

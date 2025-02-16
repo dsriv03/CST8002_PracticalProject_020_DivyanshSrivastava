@@ -21,6 +21,8 @@ fn main() {
 
     let mut dao = business::crude_runs_dao::CrudeRunsDao::new();
     dao.load_all_runs();
+    dao.write_to_csv();
+
     //time benchmark end
     let end = chrono::Local::now();
     println!("Time taken: {}", start - end); //TODO: replace with a benchmark test

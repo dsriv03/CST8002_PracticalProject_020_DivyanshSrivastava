@@ -9,6 +9,7 @@
 use chrono::NaiveDate;
 
 /// Struct CrudeRunsDTO meant as Data Transfer Object for the crude runs csv
+#[derive(serde::Serialize)]
 pub struct CrudeRunsDTO {
     
     /// 128-bit unsigned int, ID of entry

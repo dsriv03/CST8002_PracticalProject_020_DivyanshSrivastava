@@ -38,7 +38,7 @@ impl CrudeRunsDao{
     }
     }
 
-    pub fn write_to_csv(&mut self) -> Result<(), Box<dyn Error>>{
+    pub fn write_to_csv(&self) -> Result<(), Box<dyn Error>>{
  
         let id = Uuid::new_v4().to_string();
         let mut path: String = String::from_str("resources/").expect("Bad input");
@@ -46,7 +46,7 @@ impl CrudeRunsDao{
         path.push_str(".csv");
         
         let mut writer = csv::Writer::from_path(path)?;
-        for entry in &mut self.entries{
+        for entry in &self.entries{
             writer.serialize(&entry);
         }
         Ok(())
@@ -57,5 +57,12 @@ impl CrudeRunsDao{
         self.entries.get(id-1)
 
     }
+
+    pub fn create_entry(&mut self, item: CrudeRunsDTO) {
+
+        self.entries.push(item);
+    }
+
+    
 
 }

@@ -63,6 +63,12 @@ impl CrudeRunsDao{
         self.entries.push(item);
     }
 
-    
+    pub fn update_entry(&mut self, id: usize, item: CrudeRunsDTO){
 
+        //Input is validated in presentation layer
+        self.entries.remove(id);
+    }
+
+
+    
 }

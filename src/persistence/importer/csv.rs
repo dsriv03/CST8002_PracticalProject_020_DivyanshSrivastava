@@ -61,7 +61,7 @@ pub fn import_from_csv(path: String) -> Result<Vec<CrudeRunsDTO>, Box<dyn Error>
         import_counter += 1;
 
         //TODO: create better logic to dynamically change entry count limit (pass it as an argument?)
-        if import_counter > 100{
+        if import_counter > 101{
             import_counter -= 1;
             println!("{} successfully imported.", import_counter);
             return Ok(vec_dto);

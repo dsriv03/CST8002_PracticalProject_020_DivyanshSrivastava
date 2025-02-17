@@ -20,7 +20,7 @@ impl CrudeRunsDao{
         }
     }
 
-    pub fn load_all_runs(&mut self){
+    pub fn load_all_runs(&mut self) -> &Vec<CrudeRunsDTO>{
     // Call importer to get the DTO vector with all imported entries
     //TODO: import location from props file 
     let list_of_entries: Vec<CrudeRunsDTO> = 
@@ -29,13 +29,7 @@ impl CrudeRunsDao{
 
     //TODO: handle csv error here?
     self.entries = list_of_entries;
-
-    // Iteratore over the DTO vector and call to string on each
-    for entry in &self.entries{
-        entry.to_string();
-        //TODO: Shift this to presentation
-        println!("Practical Project 1 by Divyansh Srivastava, 041109063.")
-    }
+    &self.entries
     }
 
     pub fn write_to_csv(&self) -> Result<(), Box<dyn Error>>{

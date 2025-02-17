@@ -8,10 +8,11 @@
 
 mod persistence;
 mod business;
+mod presentation;
 
 use persistence::importer::csv;
-use persistence::model::crude_runs_dto::{self, CrudeRunsDTO};
-use business::crude_runs_dao;
+use persistence::model::crude_runs_dto;
+use presentation::menu;
 
 /// Main - entrypoint of program
 fn main() {
@@ -19,12 +20,10 @@ fn main() {
     //time benchmark begin
     let start = chrono::Local::now();
 
-    let mut dao = business::crude_runs_dao::CrudeRunsDao::new();
-    dao.load_all_runs();
-    dao.write_to_csv();
+    menu::display_loop();
 
-    //time benchmark end
+    //time benchmark end)
     let end = chrono::Local::now();
-    println!("Time taken: {}", start - end); //TODO: replace with a benchmark test
+    println!("Time used: {}", start - end); //TODO: replace with a benchmark test
 
 }

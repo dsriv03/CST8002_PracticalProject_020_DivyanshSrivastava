@@ -181,7 +181,7 @@ impl CrudeRunsDTO {
     }
 
     /// Prints each field in the crude run DTO struct
-    pub fn to_string(&mut self){
+    pub fn to_string(&self){
         println!("id: {},
         week_end: {},
         week_end_last_year: {},

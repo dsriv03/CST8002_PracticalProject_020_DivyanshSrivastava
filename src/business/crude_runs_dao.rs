@@ -65,10 +65,15 @@ impl CrudeRunsDao{
 
     pub fn update_entry(&mut self, id: usize, item: CrudeRunsDTO){
 
-        //Input is validated in presentation layer
-        self.entries.remove(id);
+        //push to last index of vector
+        self.create_entry(item);
+        //swap input index with last index and drop the last index
+        self.entries.swap_remove(id);
     }
 
+    pub fn delete_entry(&mut self, id: usize) {
 
+        self.entries.remove(id);
+    }
     
 }

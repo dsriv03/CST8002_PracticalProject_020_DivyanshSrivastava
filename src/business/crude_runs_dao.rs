@@ -31,7 +31,7 @@ impl CrudeRunsDao{
     self.entries = list_of_entries;
 
     // Iteratore over the DTO vector and call to string on each
-    for entry in &mut self.entries{
+    for entry in &self.entries{
         entry.to_string();
         //TODO: Shift this to presentation
         println!("Practical Project 1 by Divyansh Srivastava, 041109063.")
@@ -50,6 +50,12 @@ impl CrudeRunsDao{
             writer.serialize(&entry);
         }
         Ok(())
+    }
+
+    pub fn load_by_id(&self, id: usize) -> Option<&CrudeRunsDTO>{
+        
+        self.entries.get(id-1)
+
     }
 
 }

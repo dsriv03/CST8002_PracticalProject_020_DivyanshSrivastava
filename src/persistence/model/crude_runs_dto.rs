@@ -10,10 +10,12 @@ use chrono::NaiveDate;
 
 /// Struct CrudeRunsDTO meant as Data Transfer Object for the crude runs csv
 #[derive(serde::Serialize)]
+#[derive(PartialEq)]
+#[derive(Debug)]
 pub struct CrudeRunsDTO {
     
-    /// 128-bit unsigned int, ID of entry
-    id: u128,
+    /// 64 bit signed int, ID of entry
+    id: i64,
 
     /// Date without timezone in MM/DD/YYYY, January 1990 to most recently available
     week_end: chrono::NaiveDate,
@@ -176,8 +178,63 @@ impl CrudeRunsDTO {
     ///
     /// * `ID`
     ///
-    pub fn set_id(&mut self, id: u128){
+    pub fn set_id(&mut self, id: i64){
         self.id = id;
+    }
+
+    // Getter for `id`
+    pub fn get_id(&self) -> i64 {
+        self.id
+    }
+
+    // Getter for `week_end`
+    pub fn get_week_end(&self) -> &NaiveDate {
+        &self.week_end
+    }
+
+    // Getter for `week_end_last_year`
+    pub fn get_week_end_last_year(&self) -> &NaiveDate {
+        &self.week_end_last_year
+    }
+
+    // Getter for `region`
+    pub fn get_region(&self) -> &str {
+        &self.region
+    }
+
+    // Getter for `volume`
+    pub fn get_volume(&self) -> f64 {
+        self.volume
+    }
+
+    // Getter for `capacity`
+    pub fn get_capacity(&self) -> f64 {
+        self.capacity
+    }
+
+    // Getter for `four_week_avg`
+    pub fn get_four_week_avg(&self) -> f64 {
+        self.four_week_avg
+    }
+
+    // Getter for `four_week_avg_lastyear`
+    pub fn get_four_week_avg_lastyear(&self) -> f64 {
+        self.four_week_avg_lastyear
+    }
+
+    // Getter for `ytd_avg`
+    pub fn get_ytd_avg(&self) -> f64 {
+        self.ytd_avg
+    }
+
+    // Getter for `ytd_avg_lastyear`
+    pub fn get_ytd_avg_lastyear(&self) -> f64 {
+        self.ytd_avg_lastyear
+    }
+
+    // Getter for `unit`
+    pub fn get_unit(&self) -> &str {
+        &self.unit
     }
 
     /// Prints each field in the crude run DTO struct

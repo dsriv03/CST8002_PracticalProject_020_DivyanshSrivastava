@@ -6,9 +6,11 @@
 */
 
 use std::{error::Error, fs::File};
-use crate::crude_runs_dto::CrudeRunsDTO;
+use persistence::model::crude_runs_dto::CrudeRunsDTO;
 
 use chrono::NaiveDate;
+
+use crate::persistence;
 
     /// Handles importing data from a csv file and packaging them into a vector
     ///
@@ -31,7 +33,7 @@ pub fn import_from_csv(path: String) -> Result<Vec<CrudeRunsDTO>, Box<dyn Error>
     .from_reader(file);
 
     // ID Counter
-    let mut import_counter: u128 = 1; //TODO: move it to the struct? if possible and increment it there
+    let mut import_counter: i64 = 1; //TODO: move it to the struct? if possible and increment it there
     
     // For loop that iterates over the reader iterator and returns a Record array
     for result in rdr.records() {
@@ -61,7 +63,7 @@ pub fn import_from_csv(path: String) -> Result<Vec<CrudeRunsDTO>, Box<dyn Error>
         import_counter += 1;
 
         //TODO: create better logic to dynamically change entry count limit (pass it as an argument?)
-        if import_counter > 101{
+        if import_counter > 100{
             import_counter -= 1;
             println!("{} successfully imported.", import_counter);
             return Ok(vec_dto);

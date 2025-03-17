@@ -5,13 +5,12 @@
     Submission Date: 26/1/2025
 */
 
-
 mod persistence;
 mod business;
 mod presentation;
 
+use persistence::formats;
 use persistence::importer::csv;
-use persistence::model::crude_runs_dto;
 use presentation::menu;
 
 /// Main - entrypoint of program

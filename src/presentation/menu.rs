@@ -4,7 +4,15 @@ use chrono::NaiveDate;
 
 use crate::{business::{self, crude_runs_dao::CrudeRunsDao}, persistence::{formats::{in_memory::InMemory, sqlitedb, writable::Writable}, model::crude_runs_dto::CrudeRunsDTO}};
 
-
+    /// Core display loop of the CLI menu
+    ///
+    /// # Arguments
+    ///
+    /// * None
+    /// 
+    /// # Returns
+    /// 
+    /// * None
 pub fn display_loop(){
     let mut display = true;
     let mut dao_type = true;
@@ -108,7 +116,15 @@ pub fn display_loop(){
 
 }
 
-
+    /// Takes input and creates a new item
+    ///
+    /// # Arguments
+    ///
+    /// * None
+    /// 
+    /// # Returns
+    /// 
+    /// * CrudeRunsDTO
 fn create_new_item_helper() -> CrudeRunsDTO{
 
     let mut new_item: Vec<String> = Vec::new();
@@ -134,6 +150,15 @@ fn create_new_item_helper() -> CrudeRunsDTO{
     entry
 }
 
+    /// Takes input and returns the string
+    ///
+    /// # Arguments
+    ///
+    /// * None
+    /// 
+    /// # Returns
+    /// 
+    /// * String
 pub fn take_input() -> String{
     let mut input_string = String::new();
     input_string.clear();
@@ -142,12 +167,15 @@ pub fn take_input() -> String{
     input_string.to_string().trim().to_string()
 }
 
-pub fn load_all(dao: &mut impl Writable){
-    for entry in dao.load_all_runs() {
-        entry.to_string();
-    }
-}
-
+    /// Prints available options
+    ///
+    /// # Arguments
+    ///
+    /// * None
+    /// 
+    /// # Returns
+    /// 
+    /// * None
 pub fn display_options(){
     println!("Available options");
     println!("1 - Display all values");

@@ -17,12 +17,30 @@ pub struct SqliteDB{
 
 impl Writable for SqliteDB{
 
+    /// Handles importing data from a csv file, creating an SQL table and packaging them into a vector
+    ///
+    /// # Arguments
+    ///
+    /// * None
+    /// 
+    /// # Returns
+    /// 
+    /// * `All Crude Runs vector`
     fn load_all_runs(&mut self) -> &Vec<CrudeRunsDTO>{
     
     self.entries = self.import_to_sql();
     &self.entries
     }
 
+    /// Saves data into a csv using Uuid
+    ///
+    /// # Arguments
+    ///
+    /// * None
+    /// 
+    /// # Returns
+    /// 
+    /// * `dynamic error object`
     fn persist(&self) -> Result<(), Box<dyn Error>>{
  
         let id = Uuid::new_v4().to_string();
@@ -37,17 +55,44 @@ impl Writable for SqliteDB{
         Ok(())
     }
 
+    /// Loads entry by id
+    ///
+    /// # Arguments
+    ///
+    /// * ID
+    /// 
+    /// # Returns
+    /// 
+    /// * `Specified crude runs object`
     fn load_by_id(&self, id: usize) -> Option<&CrudeRunsDTO>{
         
         self.entries.get(id)
 
     }
 
+    /// Creates new crude runs entry
+    ///
+    /// # Arguments
+    ///
+    /// * CrudeRunsDTO
+    /// 
+    /// # Returns
+    /// 
+    /// * None
     fn create_entry(&mut self, item: CrudeRunsDTO) {
 
         self.entries.push(item);
     }
 
+    /// Updates a preexisting entry
+    ///
+    /// # Arguments
+    ///
+    /// * ID, CrudeRunsDTO
+    /// 
+    /// # Returns
+    /// 
+    /// * None
     fn update_entry(&mut self, id: usize, item: CrudeRunsDTO){
 
         //push to last index of vector
@@ -95,7 +140,7 @@ impl SqliteDB {
     }
 
     pub fn import_to_sql(&self) -> Vec<CrudeRunsDTO>{
-        // Call importer to get the DTO vector with all imported entries
+    // Call importer to get the DTO vector with all imported entries
     //TODO: import location from props file 
     let list_of_entries: Vec<CrudeRunsDTO> = 
     import_from_csv(String::from("resources/data.csv"))

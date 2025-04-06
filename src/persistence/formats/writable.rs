@@ -1,6 +1,7 @@
 use std::error::Error;
 use crate::persistence::model::crude_runs_dto::CrudeRunsDTO;
 
+///Writable Trait for format implementations
 pub trait Writable {
     fn load_all_runs(&mut self) -> &Vec<CrudeRunsDTO>;
     fn persist(&self) -> Result<(), Box<dyn Error>>;
@@ -8,5 +9,5 @@ pub trait Writable {
     fn create_entry(&mut self, item: CrudeRunsDTO);
     fn update_entry(&mut self, id: usize, item: CrudeRunsDTO);
     fn delete_entry(&mut self, id: usize);
-
+    fn get_runs(&mut self) -> &Vec<CrudeRunsDTO>;
 }

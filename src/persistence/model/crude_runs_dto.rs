@@ -1,17 +1,19 @@
 /*
     Author: Divyansh Srivastava
     Student Number: 041109063
-    Submission: Practical Project 1 for CST 8002_020
-    Submission Date: 26/1/2025
+    Submission: Practical Project for CST 8002_020
+    Submission Date: 
 */
 
 
 use chrono::NaiveDate;
+use tabled::Tabled;
 
 /// Struct CrudeRunsDTO meant as Data Transfer Object for the crude runs csv
 #[derive(serde::Serialize)]
 #[derive(PartialEq)]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
+#[derive(Tabled)]
 pub struct CrudeRunsDTO {
     
     /// 64 bit signed int, ID of entry

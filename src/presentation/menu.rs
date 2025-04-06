@@ -1,8 +1,9 @@
-use std::io;
+use std::{array, io};
 
 use chrono::NaiveDate;
+use tabled::Table;
 
-use crate::{business::{self, crude_runs_dao::CrudeRunsDao}, persistence::{formats::{in_memory::InMemory, sqlitedb, writable::Writable}, model::crude_runs_dto::CrudeRunsDTO}};
+use crate::{business::{self, crude_runs_dao::CrudeRunsDao}, persistence::{formats::{in_memory::InMemory, sqlitedb, writable::Writable}, model::crude_runs_dto::CrudeRunsDTO}, presentation::sort::sort};
 
     /// Core display loop of the CLI menu
     ///
@@ -23,9 +24,13 @@ pub fn display_loop(){
     let mut memory_dao: CrudeRunsDao<_> = business::crude_runs_dao::CrudeRunsDao { Dao: InMemory::new() };
     let mut sqlite_dao: CrudeRunsDao<_> = business::crude_runs_dao::CrudeRunsDao { Dao: sqlitedb::SqliteDB::new() };
 
+    //call load_all once as an init function and delegate actual loading to a different method, using field vector
     for entry in memory_dao.load_all() {
         entry.to_string();
     }
+
+    let mut entry_table = Table::new(memory_dao.load_all());
+    println!("{}", entry_table);
 
     display_options();
 
@@ -35,12 +40,10 @@ pub fn display_loop(){
             match take_input().as_str() {
                 "1" => {
                     let list = match dao_type {
-                        true => {memory_dao.load_all()},
-                        false => {sqlite_dao.load_all()}
+                        true => {memory_dao.get_runs()},
+                        false => {sqlite_dao.get_runs()}
                     };
-                    for entry in list{
-                        entry.to_string();
-                    }
+                    println!("{}", Table::new(list))
                 }
                 ,
                 "2" => {
@@ -82,11 +85,9 @@ pub fn display_loop(){
                     let id: u64 = take_input().parse().expect("Couldn't parse as a number");
                     match dao_type {
                         true => {
-                        let new_entry = create_new_item_helper();
                         memory_dao.delete_entry(id.try_into().unwrap());
                     },
                         false => {
-                        let new_entry = create_new_item_helper();
                         sqlite_dao.delete_entry(id.try_into().unwrap());
                     }
                     }
@@ -95,21 +96,17 @@ pub fn display_loop(){
                     dao_type = !dao_type;
                 }
                 ,
+                "8" => {
+                    sort(memory_dao.get_runs());
+                }
+                ,
                 "0" => {
                     println!("The program will now exit.");
                     display = false;
                 }
                 ,
                 _ => {println!("Please enter a valid menu item");
-                println!("Available options");
-                println!("1 - Display all values");
-                println!("2 - Write the extracted data in a new file");
-                println!("3 - Load entry by ID");
-                println!("4 - Create a new entry");
-                println!("5 - Update an existing entry");
-                println!("6 - Delete an entry");
-                println!("7 - Switch DAO");
-                println!("0 - Exit Program");},
+                display_options();
             }
         }
         
@@ -129,8 +126,20 @@ fn create_new_item_helper() -> CrudeRunsDTO{
 
     let mut new_item: Vec<String> = Vec::new();
         let mut counter = 0;
+        let item_list: [String; 11] = 
+        ["id".to_string(),
+        "week_end %Y-%m-%d".to_string(),
+        "week_end_last_year %Y-%m-%d".to_owned(),
+        "region".to_owned(),
+        "volume".to_owned(),
+        "capacity".to_owned(),
+        "four_week_avg".to_owned(),
+        "four_week_avg_lastyear".to_owned(),
+        "ytd_avg".to_owned(),
+        "ytd_avg_lastyear".to_owned(),
+        "unit".to_owned()];
         while counter < 11 {
-            println!("Enter data:");
+            println!("Enter {}:", item_list[counter]);
             new_item.push(take_input());
             counter += 1;
     }
@@ -185,5 +194,7 @@ pub fn display_options(){
     println!("5 - Update an existing entry");
     println!("6 - Delete an entry");
     println!("7 - Switch DAO");
+    println!("8 - Sort");
     println!("0 - Exit Program");
+}
 }

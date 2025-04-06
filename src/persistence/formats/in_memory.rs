@@ -11,7 +11,7 @@ use super::writable::Writable;
 
 pub struct InMemory{
 
-    entries: Vec<CrudeRunsDTO>
+    pub entries: Vec<CrudeRunsDTO>
 
 }
 
@@ -111,6 +111,10 @@ impl Writable for InMemory{
     fn delete_entry(&mut self, id: usize) {
 
         self.entries.remove(id-1);
+    }
+
+    fn get_runs(&mut self) -> &Vec<CrudeRunsDTO> {
+        &self.entries
     }
     
 }

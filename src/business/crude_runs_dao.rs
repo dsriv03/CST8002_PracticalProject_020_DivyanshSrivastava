@@ -31,4 +31,8 @@ impl<Dao: Writable> CrudeRunsDao<Dao> {
     pub fn delete_entry(&mut self, id: usize){
         self.Dao.delete_entry(id);
     }
+
+    pub fn get_runs(&mut self) -> Vec<CrudeRunsDTO> {
+        self.Dao.get_runs().clone()
+    }
 }

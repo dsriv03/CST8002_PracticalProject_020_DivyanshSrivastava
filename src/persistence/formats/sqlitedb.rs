@@ -11,7 +11,7 @@ use super::writable::Writable;
 
 pub struct SqliteDB{
     dbcon: rusqlite::Connection,
-    entries: Vec<CrudeRunsDTO>
+    pub entries: Vec<CrudeRunsDTO>
 
 }
 
@@ -106,6 +106,10 @@ impl Writable for SqliteDB{
         self.entries.remove(id-1);
     }
     
+    fn get_runs(&mut self) -> &Vec<CrudeRunsDTO> {
+        &self.entries
+    }
+
 }
 
 impl SqliteDB {
@@ -122,7 +126,7 @@ impl SqliteDB {
     }
 
     pub fn init(dbcon: &rusqlite::Connection){
-        dbcon.execute_batch(
+        let _ = dbcon.execute_batch(
             "CREATE TABLE crude_runs (
                 id UUID PRIMARY KEY,
                 week_end DATE NOT NULL,
@@ -148,7 +152,7 @@ impl SqliteDB {
 
     //TODO: handle csv error here?
     for entry in &list_of_entries{
-        self.dbcon.execute("INSERT INTO crude_runs VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)",
+        let _ = self.dbcon.execute("INSERT INTO crude_runs VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)",
         (entry.get_id(),
         entry.get_week_end(),
         entry.get_week_end_last_year(),

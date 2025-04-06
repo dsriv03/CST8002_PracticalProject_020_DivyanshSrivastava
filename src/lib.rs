@@ -8,7 +8,7 @@ mod tests{
 
 
     #[test]
-    fn test_load_all(){
+    fn test_load_by_id(){
         let mut memory_dao: CrudeRunsDao<InMemory> = business::crude_runs_dao::CrudeRunsDao { Dao: InMemory::new() };
         let mut sqlite_dao: CrudeRunsDao<SqliteDB> = business::crude_runs_dao::CrudeRunsDao { Dao: SqliteDB::new() };
         memory_dao.load_all();
@@ -17,5 +17,6 @@ mod tests{
         let sqlite_item = sqlite_dao.load_by_id(1).unwrap();
         assert_eq!(memory_item.get_id(), sqlite_item.get_id());
         assert_eq!(memory_item.get_region(), sqlite_item.get_region());
+        println!("Program by Divyansh Srivastava, 041109063")
     }
 }

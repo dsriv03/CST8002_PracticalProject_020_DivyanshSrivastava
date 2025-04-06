@@ -3,6 +3,12 @@ use tabled::Table;
 
 use crate::persistence::model::crude_runs_dto::CrudeRunsDTO;
 
+    /// Sorts input vector based on user input
+    ///
+    /// # Arguments
+    ///
+    /// * CrudeRunsDTO vector
+    /// 
 pub fn sort(mut list: Vec<CrudeRunsDTO>) {
     println!("Select options to sort by (comma-separated, e.g. '1,2'):");
     println!("Press 1 to sort by region.");
@@ -40,6 +46,11 @@ pub fn sort(mut list: Vec<CrudeRunsDTO>) {
     println!("{}", Table::new(&list));
 }
 
+    /// Takes input, sanitizes it and returns it as a string
+    ///
+    /// # Returns
+    /// 
+    /// * String
 pub fn take_input() -> String {
     let mut input_string = String::new();
     input_string.clear();
